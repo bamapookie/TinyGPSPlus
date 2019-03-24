@@ -76,7 +76,6 @@ bool TinyGPSPlus::encode(char c)
       isChecksumTerm = c == '*';
       return isValidSentence;
     }
-    break;
 
   case '$': // sentence begin
     curTermNumber = curTermOffset = 0;
@@ -93,8 +92,6 @@ bool TinyGPSPlus::encode(char c)
       parity ^= c;
     return false;
   }
-
-  return false;
 }
 
 //
@@ -111,18 +108,22 @@ int TinyGPSPlus::fromHex(char a)
 }
 
 // static
-// Parse a (potentially negative) number with up to 2 decimal digits -xxxx.yy
+// Parse a (potentially negative) number with up to 3 decimal digits -xxxx.yyy
 int32_t TinyGPSPlus::parseDecimal(const char *term)
 {
   bool negative = *term == '-';
   if (negative) ++term;
-  int32_t ret = 100 * (int32_t)atol(term);
+  int32_t ret = 1000 * (int32_t)atol(term);
   while (isdigit(*term)) ++term;
   if (*term == '.' && isdigit(term[1]))
   {
-    ret += 10 * (term[1] - '0');
+    ret += 100 * (term[1] - '0');
     if (isdigit(term[2]))
-      ret += term[2] - '0';
+    {
+      ret += 10 * (term[2] - '0');
+      if (isdigit(term[3]))
+        ret += term[3] - '0';
+    }
   }
   return negative ? -ret : ret;
 }
@@ -412,25 +413,25 @@ uint8_t TinyGPSDate::day()
 uint8_t TinyGPSTime::hour()
 {
    updated = false;
-   return time / 1000000;
+   return time / 10000000;
 }
 
 uint8_t TinyGPSTime::minute()
 {
    updated = false;
-   return (time / 10000) % 100;
+   return (time / 100000) % 100;
 }
 
 uint8_t TinyGPSTime::second()
 {
    updated = false;
-   return (time / 100) % 100;
+   return (time / 1000) % 1000;
 }
 
-uint8_t TinyGPSTime::centisecond()
+uint16_t TinyGPSTime::millisecond()
 {
    updated = false;
-   return time % 100;
+   return time % 1000;
 }
 
 void TinyGPSDecimal::commit()

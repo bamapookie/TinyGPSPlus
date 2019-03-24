@@ -51,7 +51,7 @@ day	KEYWORD2
 hour	KEYWORD2
 minute	KEYWORD2
 second	KEYWORD2
-centisecond	KEYWORD2
+millisecond	KEYWORD2
 value	KEYWORD2
 knots	KEYWORD2
 mph	KEYWORD2

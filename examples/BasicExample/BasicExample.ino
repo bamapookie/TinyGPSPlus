@@ -79,8 +79,9 @@ void displayInfo()
     if (gps.time.second() < 10) Serial.print(F("0"));
     Serial.print(gps.time.second());
     Serial.print(F("."));
-    if (gps.time.centisecond() < 10) Serial.print(F("0"));
-    Serial.print(gps.time.centisecond());
+    if (gps.time.milliisecond() < 10) Serial.print(F("0"));
+    if (gps.time.milliisecond() < 100) Serial.print(F("0"));
+    Serial.print(gps.time.millisecond());
   }
   else
   {

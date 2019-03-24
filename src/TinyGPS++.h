@@ -110,7 +110,7 @@ public:
    uint8_t hour();
    uint8_t minute();
    uint8_t second();
-   uint8_t centisecond();
+   uint16_t millisecond();
 
    TinyGPSTime() : valid(false), updated(false), time(0)
    {}

@@ -81,8 +81,8 @@ void loop()
     Serial.print(gps.time.minute());
     Serial.print(F(" Second="));
     Serial.print(gps.time.second());
-    Serial.print(F(" Hundredths="));
-    Serial.println(gps.time.centisecond());
+    Serial.print(F(" Thousandths="));
+    Serial.println(gps.time.millisecond());
   }
 
   else if (gps.speed.isUpdated())
