@@ -425,7 +425,7 @@ uint8_t TinyGPSTime::minute()
 uint8_t TinyGPSTime::second()
 {
    updated = false;
-   return (time / 1000) % 1000;
+   return (time / 1000) % 100;
 }
 
 uint16_t TinyGPSTime::millisecond()
